@@ -26,9 +26,9 @@
     <node name="static_tf_pub_world_to_gazebo_world" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0  0 0 0 1 map world" />
 
     <!-- Add your node here -->
-    
-    <group if="$(arg rviz)">
-    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="-d $(find cw3q5)/config/iiwa14.rviz" output="screen"/>
-    </group>
+    <node name="get_mass" pkg="iiwa_kn_dy" type="iiwa_kn_dy_node" output="screen"/>
 
+   <!--   <group if="$(arg rviz)">
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="-d $(find iiwa_kn_dy)/config/iiwa14.rviz" output="screen"/>
+    </group>-->
 </launch>

@@ -9,6 +9,7 @@ project(iiwa_kn_dy)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   iiwa14Kine
+  iiwa_kdl
   rosbag
   roscpp
   rospy
@@ -18,27 +19,17 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 find_package(Eigen3 REQUIRED)
-find_package(orocos_kdl REQUIRED) 
-
-set(HEADER_FILES include/iiwa_kn_dy/kdl_kine_solver.h)
 
 catkin_package(
-        INCLUDE_DIRS include
-        LIBRARIES iiwa_kn_dy
-        CATKIN_DEPENDS iiwa14Kine geometry_msgs roscpp sensor_msgs rospy rosbag trajectory_msgs 
-        DEPENDS EIGEN3 orocos_kdl
+        CATKIN_DEPENDS iiwa14Kine iiwa_kdl geometry_msgs roscpp sensor_msgs rospy rosbag trajectory_msgs
+        DEPENDS EIGEN3 #orocos_kdl#orocos_kdl
 )
 
 include_directories(
-        include
+        #include
         ${catkin_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIRS}
-        ${OROCOS_KDL_INCLUDE_DIRS}
-)
-
-add_library(${PROJECT_NAME} 
-        src/kdl_kine_solver.cpp 
-        ${HEADER_FILES}
+        #${OROCOS_KDL_INCLUDE_DIRS}
 )
 
 ## Declare a C++ executable
@@ -53,4 +44,5 @@ target_link_libraries(${PROJECT_NAME}_node
   ${catkin_LIBRARIES}
 )
 
+#target_link_libraries(${PROJECT_NAME} orocos_kdl)
 

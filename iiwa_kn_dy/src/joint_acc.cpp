@@ -4,7 +4,7 @@
 #include "trajectory_msgs/JointTrajectory.h"
 #include "geometry_msgs/Point.h"
 #include <sensor_msgs/JointState.h>
-#include "iiwa_kn_dy/kdl_kine_solver.h"
+#include "iiwa_kdl/kdl_kine_solver.h"
 #include "iiwa14Kine/iiwa14Kine.h"
 
 #include "boost/foreach.hpp"

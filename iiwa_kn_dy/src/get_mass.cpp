@@ -4,7 +4,7 @@
 #include "trajectory_msgs/JointTrajectory.h"
 #include "geometry_msgs/Point.h"
 #include <sensor_msgs/JointState.h>
-#include <iiwa_kn_dy/kdl_kine_solver.h>
+#include <iiwa_kdl/kdl_kine_solver.h>
 #include <iiwa14Kine/iiwa14Kine.h>
 
 #include "boost/foreach.hpp"
@@ -21,6 +21,7 @@ using namespace Eigen;
 using namespace std;
 int main (int argc, char **argv)
 {
+    ROS_INFO("______________INIT OF THE GET MASS NODE_______");
     ros::init(argc, argv, "iiwa_mass_cw3");
     bool use_own_dynamics = true;
     robot_kinematic h_kine;
@@ -89,10 +90,13 @@ int main (int argc, char **argv)
     double mass_average = 0;
     VectorXd joint = joints.block(0, 0, 1, 7).transpose();
     int i = 0;
+
+    ROS_INFO("______________INIT OF THE WHILE_______");
     while (ros::ok())
     {
         if (h_kine.msg_received)
         {
+            ROS_INFO("______________INIT OF THE MSG RECEIVED_______");
             VectorXd angles(7, 1);
             angles << h_kine.current_joint_position.data(0), h_kine.current_joint_position.data(1),
                 h_kine.current_joint_position.data(2), h_kine.current_joint_position.data(3),
@@ -112,6 +116,7 @@ int main (int argc, char **argv)
             MatrixXd Jaco = iiwa14.get_jacobian(angles);
             MatrixXd B = iiwa14.getB(angles);
             if (calculate_force) {
+                ROS_INFO("______________FORCE CALCULATED_______");
                 MatrixXd g = (Jaco * B.inverse() * Jaco.transpose()).inverse();
                 MatrixXd f_hard = g * (Jaco * B.inverse() * (angles_effort - G_M));
                 Vector3d force = f_hard.block(0, 0, 3, 1);
